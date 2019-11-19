@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+  Final Project for CST 336 Internet Programming
+  Team:
+  Austin Ah Loo
+  Mikie Reed
+  Mitchell Saunders
+  Nick Saunders
+ -->
+<html lang="en">
+  <head>
+    <title>Home</title>
+  <% include partials/head.ejs %>
+  <% include partials/nav.ejs %>
+
+
+  <div class="wrapper">
+  <!-- Sidebar Holder -->
+    <nav id="sidebar">
+      <h2>Shopping Cart</h2>
+        <!--Shopping Carts contents go here -->
+    	  <!-- Button --> 
+        <form action="./cart.html">
+          <button class="btn btn-success" type="submit">Checkout</button>
+        </form>
+    </nav>
+    <!-- Page Content Holder -->
+      <div id="content">
+        <nav class="navbar navbar-expand-sm navbar-default">
+          <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="navbar-btn"> 
+              <span></span>
+              <span></span>
+              <span></span>
+             </button>
+         </div>
+      </nav>
+      <!-- Page Contents-->
+      <!-- place holder-->
+      <div>
+        <div class="row">
+          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
+          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
+          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
+        </div>
+        
+        <div class="row">
+          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
+          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
+          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
+        </div>
+    </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+        </div>
+    </div>
+  
+ <% include partials/endScripts.ejs %>
+   
+<% include partials/footer.ejs %>
