@@ -19,6 +19,11 @@
     <nav id="sidebar">
       <h2>Shopping Cart</h2>
         <!--Shopping Carts contents go here -->
+        <p id="productInCart"></p>
+        <p>Qty:<span id="quantity"></span></p>
+        <span>Size: <span id="shoeSize"> </span>
+        
+        
     	  <!-- Button --> 
         <form action="./cart.html">
           <button class="btn btn-success" type="submit">Checkout</button>
@@ -28,27 +33,52 @@
       <div id="content">
         <nav class="navbar navbar-expand-sm navbar-default">
           <div class="container-fluid">
-            <button type="button" id="sidebarCollapse" class="navbar-btn"> 
+            <button type="button" id="sidebarCollapse" class="navbar-btn" > 
               <span></span>
               <span></span>
               <span></span>
              </button>
          </div>
+         <div class="container-fluid">
+           <form>
+             <label>Men 
+               <input type="checkbox" checked="checked">
+               <span class="checkmark"></span>
+             </label>
+             <label>Women
+               <input type="checkbox" checked="checked">
+               <span class="checkmark"></span>
+             </label>
+             
+             <select>
+                <option value="default">All Colors</option>
+                <option value="red">Red</option>
+                <option value="black">Black</option>
+                <option value="brown">Brown</option>
+              </select>
+              
+              <select>
+                <option value="default">All Types</option>
+                <option value="red">Type 1</option>
+                <option value="black">Type 2</option>
+                <option value="brown">Type 3</option>
+                <option value="gray">Type 4</option>
+                <option value="yellow">Type 5</option>
+              </select>
+              <button class="btn btn-success" type="submit">Search</button>
+            </form>
+          </div>
       </nav>
+
+
       <!-- Page Contents-->
       <!-- place holder-->
       <div>
         <div class="row">
           <div id="product" class="container"><% include partials/testProduct.ejs %></div>
-          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
-          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
+
         </div>
-        
-        <div class="row">
-          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
-          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
-          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
-        </div>
+
     </div>
             
             

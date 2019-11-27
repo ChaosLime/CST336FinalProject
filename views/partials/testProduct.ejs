@@ -1,7 +1,37 @@
-<h3>(Product name here)</h3>
-<img src="/img/testShoe.jpg">
-<h4>(Atributes here)</h4>
-<p>(Cost here)</p>
-<form>
-      <button id="btn-add" class="btn btn-outline-primary" type="submit">Add to Cart</button>
+<div id="productImage"></div>
+<h4 id="productName"></h4>
+<div id="productColor"></div>
+<div id="productPrice"></div>
+<form action="submitToCart()">
+    <div class="slidecontainer">
+        <input type="range" min="5" max="13" value="9" class="slider" id="myRange">
+        <div>Size <span id="shoeSize"></span><span id="manOrWoman"></span></div>
+    </div>
+    <label>Qty: </label>
+        <input id="productQty"class="col-md-3" type="number" min="1" value="1">
+   <button id="btn-add" class="btn btn-primary" type="button">Add to Cart</button>
 </form>
+
+
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("shoeSize");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
+//loads products dynamicly
+document.getElementById("productImage").innerHTML='<img src="./img/testShoe.jpg"/>';
+document.getElementById("productName").innerHTML='Test shoe';
+document.getElementById("productColor").innerHTML='Brown';
+document.getElementById("productPrice").innerHTML='15.00';
+document.getElementById("manOrWoman").innerHTML=' Men';
+
+var shoeSizeCart = document.getElementById("shoeSize").value;
+var qty = document.getElementById("productQty").value;
+console.log("qty:"+ qty);
+console.log("size:"+shoeSizeCart)
+
+</script>
