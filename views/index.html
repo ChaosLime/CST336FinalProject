@@ -40,7 +40,6 @@
              </button>
          </div>
          <div class="container-fluid">
-           <form>
              <label>Men 
                <input type="checkbox" checked="checked">
                <span class="checkmark"></span>
@@ -59,14 +58,14 @@
               
               <select>
                 <option value="default">All Types</option>
-                <option value="red">Type 1</option>
-                <option value="black">Type 2</option>
-                <option value="brown">Type 3</option>
-                <option value="gray">Type 4</option>
-                <option value="yellow">Type 5</option>
+                <option value="t1">Type 1</option>
+                <option value="t2">Type 2</option>
+                <option value="t3">Type 3</option>
+                <option value="t4">Type 4</option>
+                <option value="t5">Type 5</option>
               </select>
-              <button class="btn btn-success" type="submit">Search</button>
-            </form>
+             <button id="searchBtnMain">Search</button>
+
           </div>
       </nav>
 
@@ -75,25 +74,14 @@
       <!-- place holder-->
       <div>
         <div class="row">
-          <div id="product" class="container"><% include partials/testProduct.ejs %></div>
+          <div id="product" class="container"><% include partials/product.ejs %></div>
 
         </div>
 
     </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
 
         </div>
     </div>
   
- <% include partials/endScripts.ejs %>
-   
 <% include partials/footer.ejs %>

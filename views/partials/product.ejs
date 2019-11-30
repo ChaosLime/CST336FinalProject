@@ -1,0 +1,42 @@
+<div id="productImage"></div>
+<h4 id="model"></h4>
+<div id="description"></div>
+<div id="price"></div>
+<form action="submitToCart()">
+    <div class="slidecontainer">
+        <input type="range" min="5" max="13" value="9" class="slider" id="myRange">
+        <div>Size <span id="shoeSizeVal"></span><span id="gender"></span>
+</div>
+    </div>
+   
+    <label>Qty: </label>
+        <input id="productQty"class="col-md-3" type="number" min="1" value="1">
+   <button id="btn-add" class="btn btn-primary" type="button">Add to Cart</button>
+</form>
+
+
+<script>
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("shoeSizeVal");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
+//loads products dynamicly
+document.getElementById("productImage").innerHTML='<img src="./img/testShoe.jpg"/>';
+/*
+document.getElementById("model").innerHTML='Test shoe';
+document.getElementById("description").innerHTML='Brown';
+document.getElementById("price").innerHTML='15.00';
+document.getElementById("gender").innerHTML=' Men';
+*/
+
+//var shoeSizeSelected = document.getElementById("shoeSize").value;
+//var qty = document.getElementById("productQty").value;
+//console.log("qty:"+ qty);
+//console.log("size:"+shoeSizeSelected)
+
+</script>
