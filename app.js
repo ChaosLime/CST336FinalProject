@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 app.set('view engine','ejs');
+app.set("views", "./views/");
 app.use(express.static("public"));
 
 
@@ -42,21 +43,45 @@ app.get("/ordered.html", function(req,res){
 //gets all from inventory
 app.get("/db/displayInventory", async function(req,res){
     var conn = tools.createConnection();
-    var sql = "SELECT * FROM inventory;";
+    var sql;
+    var sqlParams;
+    
+    if(req.query.action == "loadProduct"){
+         sql ="CALL getFilteredProductList (?,?,?);";
+         sqlParams = [req.query.color, req.query.gender, req.query.styles];
+         console.log("Search Params:"+sqlParams);
 
+    }
+   
+ 
     conn.connect( function(err){
+        
       if (err) throw err;
-        conn.query(sql, function(err, result){
+      
+        conn.query(sql,sqlParams, function(err, result){
             if (err) throw err;
-            console.log(result);
+            
+            //console.log(result[0]);
+            /ar parsedData = JSON.parse(result);
+            //console.log(parsedData);
+            //var testData = parsedData['model'];
+            //console.log(testData);
+            
+            
+            Object.keys(result).forEach(function(key) {
+                var results = result[key];
+                //res.render("partials/product.ejs",{"gender":results.gender});
+                
+               //res.render("./index.html",{"displayModel":results.model});
+                
+               //console.log(results);
+            });
+            
         });
         console.log('Connected!');
     });
 
-
 });//display Inventory
-
-
 
 
 
