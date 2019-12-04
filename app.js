@@ -62,7 +62,7 @@ app.get("/db/displayInventory", async function(req,res){
             if (err) throw err;
             
             //console.log(result[0]);
-            /ar parsedData = JSON.parse(result);
+            //ar parsedData = JSON.parse(result);
             //console.log(parsedData);
             //var testData = parsedData['model'];
             //console.log(testData);
