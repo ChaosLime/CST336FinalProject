@@ -5,9 +5,15 @@ $(document).ready(function(){
         var gender = genderCheck();
         var styles = $("#shoeStyle").val();
         var action = "loadProduct";
-        var results = updateSearch(color, gender, styles, action);
-        console.log(results);
-        renderProduct(results);
+        
+        //No longer storing the results as a var and passing to renderProduct.
+        //It seems that this was an issue with getting the data successfully to
+        //the renderProduct function.
+        //var results = updateSearch(color, gender, styles, action);
+        updateSearch(color, gender, styles, action);
+        
+        //console.log(results);
+        //renderProduct(results);
     });
     
 
@@ -43,10 +49,17 @@ $(document).ready(function(){
                         if(!data.length){
                             alert("no length");
                         }
-                        return data;
+                        //When the ajax call is successful, call renderProduct
+                        //here instead of returning it. Once it gets returned it
+                        //seesm to not be useable anymore.
+                        renderProduct(data);
+                        //return data;
                     },
                     error: function(errorThrown){
-                        alert(errorThrown);
+                        //This seems to be the alert that keeps popping up 
+                        //I am going to change it to be informative.
+                        //alert(errorThrown.text);
+                        alert("Error in updateSearch function within function.js");
                     }
             
         });//ajax

@@ -59,7 +59,7 @@ app.get("/db/displayInventory", async function(req,res){
         
       if (err) throw err;
       
-        conn.query(sql,sqlParams, function(err, result){
+        conn.query(sql, sqlParams, function(err, result){
             if (err) throw err;
             /*This block below is intended to clean up and modify the results from the database
             as a string and parse is accordingly. The counter limits the amount of results to be displayed,
@@ -67,16 +67,13 @@ app.get("/db/displayInventory", async function(req,res){
             For multiple result, it is simply seperated by a ",". Could not quite parese JSON using a database
             there fore parsing a string is another solution.
             */
-                var amountOfResults = 1;
+                var amountOfResults = 1; //this should be equal to the length of the results
                 
                 var myDataString = JSON.stringify(result);
                 myDataString = myDataString.split(/-/, amountOfResults);
                 console.log(amountOfResults + " Result(s) Displayed");
                 var cleanStr = myDataString.toString().replace(/[^a-zA-Z0-9_:.,]/g,' ').replace(/  +/g, ' ');
-                console.log(cleanStr);
-                return cleanStr;
-                
-           
+                res.send(cleanStr) //This is the correct method to use to pass information back
         });
         console.log('Connected!');
     });
