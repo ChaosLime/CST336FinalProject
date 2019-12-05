@@ -10,6 +10,8 @@ app.engine('html', require('ejs').renderFile);
 const tools = require("./tools.js");
 
 
+
+
 //root route
 app.get("/", async function(req,res){
     res.render("index.html");
@@ -50,7 +52,6 @@ app.get("/db/displayInventory", async function(req,res){
          sql ="CALL getFilteredProductList (?,?,?);";
          sqlParams = [req.query.color, req.query.gender, req.query.styles];
          console.log("Search Params:"+sqlParams);
-
     }
    
  
@@ -60,23 +61,22 @@ app.get("/db/displayInventory", async function(req,res){
       
         conn.query(sql,sqlParams, function(err, result){
             if (err) throw err;
-            
-            //console.log(result[0]);
-            //ar parsedData = JSON.parse(result);
-            //console.log(parsedData);
-            //var testData = parsedData['model'];
-            //console.log(testData);
-            
-            
-            Object.keys(result).forEach(function(key) {
-                var results = result[key];
-                //res.render("partials/product.ejs",{"gender":results.gender});
+            /*This block below is intended to clean up and modify the results from the database
+            as a string and parse is accordingly. The counter limits the amount of results to be displayed,
+            if omited in the split method, will return all results of that query.
+            For multiple result, it is simply seperated by a ",". Could not quite parese JSON using a database
+            there fore parsing a string is another solution.
+            */
+                var amountOfResults = 1;
                 
-               //res.render("./index.html",{"displayModel":results.model});
+                var myDataString = JSON.stringify(result);
+                myDataString = myDataString.split(/-/, amountOfResults);
+                console.log(amountOfResults + " Result(s) Displayed");
+                var cleanStr = myDataString.toString().replace(/[^a-zA-Z0-9_:.,]/g,' ').replace(/  +/g, ' ');
+                console.log(cleanStr);
+                return cleanStr;
                 
-               //console.log(results);
-            });
-            
+           
         });
         console.log('Connected!');
     });
