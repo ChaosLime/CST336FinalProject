@@ -67,24 +67,37 @@ $(document).ready(function(){
         
         
     function renderProduct(data){
+        //console.log(data);
         if(data.length == 0 || data == ''){
            alert('Search Not Found.');
         }else{
+            /*
+             *Below the object from the database is an array of arrays which contain
+             * all the contents of the inventory by search results. 
+             * the full results can be seen within console.dir(obj[0][i]) .
+             * calling the first list and looking through each object within it allows
+             * for each product to be instanciated with its own elements
+                 */
             var obj = JSON.parse(data);
 
-        }
+            for(var i = 0; i < obj[0].length; i++){
+                console.dir(obj[0][i]); // intended to show the whole array of the search terms.
+   
+                document.getElementById("productImage").innerHTML = "<img src='/img/inventory/" + obj[0][i].image_path +"\'>";
+                document.getElementById("model").innerHTML = "Model: "+ obj[0][i].model; 
+                document.getElementById("color").innerHTML = "Color: " + obj[0][i].color_description;
+                document.getElementById("type").innerHTML = "Type: " + obj[0][i].type_description;
+                document.getElementById("sizeAndGender").innerHTML = "Size: " + obj[0][i].size + " " + obj[0][i].gender;
+                document.getElementById("descriptionShort").innerHTML = "Short:" + obj[0][i].model_description;
+                document.getElementById("descriptionLong").innerHTML = "Long: " + obj[0][i].model_detailed_description;
+                document.getElementById("price").innerHTML = "Price: $" + obj[0][i].price;
+                document.getElementById("quantityOnHand").innerHTML = "Qty: " + obj[0][i].quantity_on_hand;
+                document.getElementById("addToCartBtn").innerHTML = "<button id='btn-add' class='btn btn-primary' type='button'>Add to Cart</button>";
 
-        document.getElementById("productImage").innerHTML = "<img src='/img/inventory/" + obj.image_path +"\'>";
-        document.getElementById("model").innerHTML = "Model: "+ obj.model; 
-        document.getElementById("color").innerHTML = "Color: " + obj.color_description;
-        document.getElementById("type").innerHTML = "Type: " + obj.type_description;
-        document.getElementById("sizeAndGender").innerHTML = "Size: " + obj.size + " " + obj.gender;
-        document.getElementById("descriptionShort").innerHTML = "Short:" + obj.model_description;
-        document.getElementById("descriptionLong").innerHTML = "Long: " + obj.model_detailed_description;
-        document.getElementById("price").innerHTML = "Price: $" + obj.price;
-        document.getElementById("quantityOnHand").innerHTML = "Qty: " + obj.quantity_on_hand;
-        document.getElementById("addToCartBtn").innerHTML = "<button id='btn-add' class='btn btn-primary' type='button'>Add to Cart</button>";
+                }
+                
         }
+    }
           
 
 });

@@ -71,22 +71,13 @@ app.get("/db/displayInventory", async function(req,res){
             For multiple result, it is simply seperated by a ",". Could not quite parse nicely with
             JSON from the database therefore was stringified and adjusted.
             */
-                var amountOfResults = 1; //this should be equal to the length of the results
-                console.log(amountOfResults + " Result(s) Displayed");
-                
-                var stringifiedResult = JSON.stringify(result);
-                var splitResult = stringifiedResult.split(",RowDataPacket ");
-                var replacedString = splitResult.toString().replace(/[^a-zA-Z0-9_:.{},\/"]/g,' ').replace(/  +/g, ' ');
-                //sets up data to be parsed and displayed on screen
-                //console.log(cleanStr);
-                var cleanStr = replacedString.split(',{', amountOfResults);
-                //console.log(iterableData);
-                var iterableData = cleanStr.toString().replace(/},"/g, "}{\"");
-                // }{ denotes the seperatation between products
-                console.log(iterableData);
-            
-               res.send(iterableData); //This is the correct method to use to pass information back
-               conn.end();
+            var stringifiedResult = JSON.stringify(result);
+            var splitResult = stringifiedResult.split(",RowDataPacket ");
+            var replacedString = splitResult.toString().replace(/[^a-zA-Z0-9[]_:.{},\/"]/g,' ').replace(/  +/g, ' ');
+            //sets up data to be parsed and displayed on screen
+            //console.log(replacedString);
+            res.send(replacedString); //This is the correct method to use to pass information back
+            conn.end();
         });
         console.log('Connected!');
        
