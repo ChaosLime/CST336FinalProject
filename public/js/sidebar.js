@@ -22,7 +22,7 @@ $(document).ready(function () {
     });
     
     let alreadyAdded = false;
-    $('#btn-add').on('click', function () {
+    $('#addToCartBtn').on('click', function () {
         if(!sideActive){
             if(!alreadyAdded){
                 sideActive = true;
@@ -45,18 +45,23 @@ $(document).ready(function () {
 
     function addToCart(x){
         if(x == 1){
-            document.getElementById("productInCart").innerHTML=
-        '<img src="./img/testShoe.jpg"/>';
+            //document.getElementById("productInCart").innerHTML='<img src="./img/testShoe.jpg"/>';
         //document.getElementById("quantity").innerHTML=
         //quantity;
         }
         else {
             alert("product not added to cart");
         }
-        
-        
 
     }
+    
+    $('#toCartBtn').on('click',function(){
+       var isLoggedIn = false;
+           if(!isLoggedIn){
+               alert("Not logged in. You will be redirected to the Sign In page.");
+           }
+ 
+    });
 
     
     

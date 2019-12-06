@@ -4,13 +4,14 @@ $(document).ready(function(){
         var color = $("#shoeColor").val();
         var gender = genderCheck();
         var styles = $("#shoeStyle").val();
+        var size = $("#shoeSizes").val();
         var action = "loadProduct";
         
         //No longer storing the results as a var and passing to renderProduct.
         //It seems that this was an issue with getting the data successfully to
         //the renderProduct function.
         //var results = updateSearch(color, gender, styles, action);
-        updateSearch(color, gender, styles, action);
+        updateSearch(color, gender, styles, size, action);
         
         //console.log(results);
         //renderProduct(results);
@@ -36,19 +37,17 @@ $(document).ready(function(){
             return "";
         }
     }
-   function updateSearch(color, gender, styles, action){
+   function updateSearch(color, gender, styles, size, action){
     $.ajax({
             method: "GET",
                url: "db/displayInventory",
               data: {color : color,
                       gender : gender,
                         styles: styles,
+                        size: size,
                         action: action
                     },
                     success: function(data){
-                        if(!data.length){
-                            alert("no length");
-                        }
                         //When the ajax call is successful, call renderProduct
                         //here instead of returning it. Once it gets returned it
                         //seesm to not be useable anymore.
@@ -67,36 +66,24 @@ $(document).ready(function(){
         
         
         
-        function renderProduct(results){
-        
-            $("#product").append(results);
-            console.log("render now");
-           //$("#product").load(results);
-        
-        
-            //$("#product").html('<% include partials/product.ejs %>');
-           $("#productImage").html("<img src='/img/inventory/mens/lifters/green.png' width='250' height='200'/>");
-           $("#model").html("Test");
-           $("#description").html("description");
-           $("#price").html("price");
-          
-           $("#slider").html("<form action='submitToCart()'>"+
-                             "<div class='slidecontainer'> " +
-                                "<input type='range' min='5' max='13' value='9' class='slider' id='myRange'>"+
-                                "<div>Size <span id='shoeSizeVal'></span><span id='gender'></span></div>" +
-                             "</div>" +
-                             "<script>" +
-                             "var slider = document.getElementById('myRange'); "+
-                             "var output = document.getElementById('shoeSizeVal'); "+
-                             "output.innerHTML = slider.value; "+
-                             "slider.oninput = function() { " +
-                             "output.innerHTML = this.value; }; "+
-                            "</script> ");
-             $("#quantity").html("<label>Qty: </label>" +
-                                "<input id='productQty' class='col-md-3' type='number' min='1' value='1'> ");                    
-           
-        
-        
+    function renderProduct(data){
+        if(data.length == 0 || data == ''){
+           alert('Search Not Found.');
+        }else{
+            var obj = JSON.parse(data);
+
+        }
+
+        document.getElementById("productImage").innerHTML = "<img src='/img/inventory/" + obj.image_path +"\'>";
+        document.getElementById("model").innerHTML = "Model: "+ obj.model; 
+        document.getElementById("color").innerHTML = "Color: " + obj.color_description;
+        document.getElementById("type").innerHTML = "Type: " + obj.type_description;
+        document.getElementById("sizeAndGender").innerHTML = "Size: " + obj.size + " " + obj.gender;
+        document.getElementById("descriptionShort").innerHTML = "Short:" + obj.model_description;
+        document.getElementById("descriptionLong").innerHTML = "Long: " + obj.model_detailed_description;
+        document.getElementById("price").innerHTML = "Price: $" + obj.price;
+        document.getElementById("quantityOnHand").innerHTML = "Qty: " + obj.quantity_on_hand;
+        document.getElementById("addToCartBtn").innerHTML = "<button id='btn-add' class='btn btn-primary' type='button'>Add to Cart</button>";
         }
           
 

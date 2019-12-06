@@ -28,9 +28,6 @@ app.get("/cart.html", function(req,res){
     res.render("cart.html");
 });
 
-app.get("/forgotPasswd.html", function(req,res){
-    res.render("forgotPasswd.html");
-});
 
 app.get("/signedUp.html", function(req,res){
     res.render("signedUp.html");
@@ -49,33 +46,50 @@ app.get("/db/displayInventory", async function(req,res){
     var sqlParams;
     
     if(req.query.action == "loadProduct"){
-         sql ="CALL getFilteredProductList (?,?,?);";
-         sqlParams = [req.query.color, req.query.gender, req.query.styles];
+         sql ="CALL getFilteredProductList (?,?,?,?);";
+         sqlParams = [req.query.color, req.query.gender, req.query.styles, req.query.size];
          console.log("Search Params:"+sqlParams);
     }
-   
- 
+
     conn.connect( function(err){
         
       if (err) throw err;
       
-        conn.query(sql, sqlParams, function(err, result){
+        conn.query(sql,sqlParams, function(err, result){
             if (err) throw err;
+            conn.on('error', function(err) {
+                console.log(err.code); // 'ER_BAD_DB_ERROR'
+            });
+            if(result == " "){
+                alert("empty result.");
+                conn.end();
+            }
+
             /*This block below is intended to clean up and modify the results from the database
             as a string and parse is accordingly. The counter limits the amount of results to be displayed,
             if omited in the split method, will return all results of that query.
-            For multiple result, it is simply seperated by a ",". Could not quite parese JSON using a database
-            there fore parsing a string is another solution.
+            For multiple result, it is simply seperated by a ",". Could not quite parse nicely with
+            JSON from the database therefore was stringified and adjusted.
             */
                 var amountOfResults = 1; //this should be equal to the length of the results
-                
-                var myDataString = JSON.stringify(result);
-                myDataString = myDataString.split(/-/, amountOfResults);
                 console.log(amountOfResults + " Result(s) Displayed");
-                var cleanStr = myDataString.toString().replace(/[^a-zA-Z0-9_:.,]/g,' ').replace(/  +/g, ' ');
-                res.send(cleanStr) //This is the correct method to use to pass information back
+                
+                var stringifiedResult = JSON.stringify(result);
+                var splitResult = stringifiedResult.split(",RowDataPacket ");
+                var replacedString = splitResult.toString().replace(/[^a-zA-Z0-9_:.{},\/"]/g,' ').replace(/  +/g, ' ');
+                //sets up data to be parsed and displayed on screen
+                //console.log(cleanStr);
+                var cleanStr = replacedString.split(',{', amountOfResults);
+                //console.log(iterableData);
+                var iterableData = cleanStr.toString().replace(/},"/g, "}{\"");
+                // }{ denotes the seperatation between products
+                console.log(iterableData);
+            
+               res.send(iterableData); //This is the correct method to use to pass information back
+               conn.end();
         });
         console.log('Connected!');
+       
     });
 
 });//display Inventory
