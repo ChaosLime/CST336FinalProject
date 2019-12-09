@@ -218,5 +218,66 @@
 }
 
 #productContainer {
+    padding: 10px;
+}
+
+#resultsFound {
     text-align: center;
+    font-size: 15px;
+    padding: 10px;
+}
+
+/* -----------
+Product Area classes
+---------------*/
+.canvas {
+    padding: 25px;
+    background-color: lightGray;
+    width: 50%;
+}
+
+.image {
+    text-align: center;
+}
+
+.properties {
+    color: black;
+    
+}
+
+.description {
+    text-align: left;
+}
+
+.price {
+    font: italic;
+    font-size: 20px;
+}
+
+.QOH {
+    text-align: center;
+}
+
+.quantityOnHand {
+    text-align: center;
+}
+
+.quantityForOrder {
+    
+}
+
+.addBtn {
+    text-align: center;
+    padding: 10px;
+}
+#productInput {
+    text-align: center;
+    padding: 10px;
+}
+
+#QuantityAvailable,
+.price
+{
+    font-weight: bold;
+    font-style: italic;
 }

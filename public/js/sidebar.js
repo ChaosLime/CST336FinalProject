@@ -22,7 +22,7 @@ $(document).ready(function () {
     });
     
     let alreadyAdded = false;
-    $('#addToCartBtn').on('click', function () {
+    $('.add-Btn').on('click', function () {
         if(!sideActive){
             if(!alreadyAdded){
                 sideActive = true;
