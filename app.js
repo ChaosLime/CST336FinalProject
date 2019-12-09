@@ -44,7 +44,6 @@ app.get("/db/displayInventory", async function(req,res){
     var conn = tools.createConnection();
     var sql;
     var sqlParams;
-    
     if(req.query.action == "loadProduct"){
          sql ="CALL getFilteredProductList (?,?,?,?);";
          sqlParams = [req.query.color, req.query.gender, req.query.styles, req.query.size];
