@@ -1,55 +1,26 @@
-
 $(document).ready(function() {
 
   /* Set values + misc */
-  var promoCode;
-  var promoPrice;
   var tax_rate = 0.08;
   var fadeTime = 300;
 
+  getUserCartContents();
+
   /* Assign actions */
-  $('.quantity input').change(function()
-  {
+  $('.quantity input').change(function() {
     updateQuantity(this);
   });
 
-  $('.remove button').click(function()
-  {
+  $('.remove button').click(function() {
     removeItem(this);
   });
 
-  $(document).ready(function()
-  {
+  $(document).ready(function() {
     updateSumItems();
   });
 
-  $(".checkout-cta").on("click", function()
-  {
-    window.open ('ordered.html','_self',false);
-  });
-
-  $('.promo-code').click(function()
-  {
-
-    promoCode = $('#promo-code').val();
-
-    if (promoCode == '10off' || promoCode == '10OFF') {
-      //If promoPrice has no value, set it as 10 for the 10OFF promocode
-      if (!promoPrice) {
-        promoPrice = 10;
-      } else if (promoCode) {
-        promoPrice = promoPrice * 1;
-      }
-    } else if (promoCode != '') {
-      alert("Invalid Promo Code");
-      promoPrice = 0;
-    }
-    //If there is a promoPrice that has been set (it means there is a valid promoCode input) show promo
-    if (promoPrice) {
-      $('.summary-promo').removeClass('hide');
-      $('.promo-value').text(promoPrice.toFixed(2));
-      recalculateCart(true);
-    }
+  $(".checkout-cta").on("click", function() {
+    window.open('ordered.html', '_self', false);
   });
 
   /* Recalculate cart */
@@ -69,7 +40,8 @@ $(document).ready(function() {
     if (promoPrice) {
       if (subtotal >= 10) {
         total -= promoPrice;
-      } else {
+      }
+      else {
         alert('Order must be more than $10 for Promo code to apply.');
         $('.summary-promo').addClass('hide');
       }
@@ -83,18 +55,20 @@ $(document).ready(function() {
 
         $('.total-value').fadeIn(fadeTime);
       });
-    } else {
+    }
+    else {
       /* Update summary display. */
       $('.final-value').fadeOut(fadeTime, function() {
         $('#cart-subtotal').html(subtotal.toFixed(2));
-        var tax = parseFloat((total*tax_rate));
+        var tax = parseFloat((total * tax_rate));
         var totalVal = parseFloat(total);
         $('#taxes').html(tax.toFixed(2));
         // total cost = subtotals + tax
         $('#cart-total').html((parseFloat(totalVal) + parseFloat(tax)).toFixed(2));
         if (total == 0) {
           $('.checkout-cta').fadeOut(fadeTime);
-        } else {
+        }
+        else {
           $('.checkout-cta').fadeIn(fadeTime);
         }
         $('.final-value').fadeIn(fadeTime);
@@ -140,6 +114,29 @@ $(document).ready(function() {
       recalculateCart();
       updateSumItems();
     });
+  }
+
+  function getUserCartContents() {
+    $.ajax({
+      method: "get",
+      url: "/api/getCart",
+      data: {
+        //"username": $("#username").val()
+        "username": "generic"
+      },
+      success: function(result, status) {
+        updateCartContents(result);
+      }
+    });
+  }
+
+  function updateCartContents(itemsInCart) {
+    $("#cart-product").html("");
+    let i = 0;
+    itemsInCart.forEach(function(item) {
+
+      i++;
+    })
   }
 
 });
