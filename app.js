@@ -20,7 +20,7 @@ app.get("/", async function(req,res){
 
 
 // other routes
-app.get("/login.html", function(req,res){
+app.get("/login", function(req,res){
     res.render("login.html");
 });
 

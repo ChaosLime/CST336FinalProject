@@ -21,22 +21,22 @@ $(document).ready(function () {
         }
     });
     
+    //used to dynamically allocate button presses to user
     let alreadyAdded = false;
-    $('.add-Btn').on('click', function () {
+    $('body').on('click','#add-btn', function () {
+        alert($("#add-btn").val());
         if(!sideActive){
             if(!alreadyAdded){
                 sideActive = true;
             $('#sidebar').toggleClass('active');
             $(this).toggleClass('active');
             isProductAdded = true;
-            console.log("add product to cart.");
-            addToCart("1");
+            //console.log("add product to cart.");
+            var x = 1;
+            addToCart(x);
             alreadyAdded = true;
             }
-            else{
-                  alert("Already in cart, please review in Checkout.");
-            }
-            
+
         }
         else{
             alert("Already in cart, please review in Checkout.");
@@ -44,14 +44,8 @@ $(document).ready(function () {
      });
 
     function addToCart(x){
-        if(x == 1){
-            //document.getElementById("productInCart").innerHTML='<img src="./img/testShoe.jpg"/>';
-        //document.getElementById("quantity").innerHTML=
-        //quantity;
-        }
-        else {
-            alert("product not added to cart");
-        }
+        $("#productInCart").html("Product  added " + x)
+        //should call insert query to cart to add unique product
 
     }
     

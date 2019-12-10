@@ -147,7 +147,7 @@ $(document).ready(function(){
                 $("#descriptionLong"+[i]).append(obj[0][i].model_detailed_description);
                 $("#price"+[i]).append( "Price: $" + obj[0][i].price);
                 $("#quantityOnHand"+[i]).append( "Quantity Available: <span id='QuantityAvailable'>" + obj[0][i].quantity_on_hand + "</span>");
-                $("#addToCartBtn"+[i]).append( "<button id='add-btn' class='btn btn-primary' type='button'>Add to Cart</button>");    
+                $("#addToCartBtn"+[i]).append( "<button id='add-btn' class='btn btn-primary' type='button' value='"+[i]+"'>Add to Cart</button>");    
             }
         }// end of renderProduct
 
