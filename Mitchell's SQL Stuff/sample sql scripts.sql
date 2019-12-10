@@ -122,7 +122,7 @@ GROUP BY c.color_description;
 
 
 -- Tests of stored procedures
-CALL transaction_addtransaction_checkout_cart_item("testUser", "WLIL", 10, "BK", "M", 1); 	-- arg1:username	arg2:model		arg3:size	arg4:color	arg5:gender		arg6:qty desired
+CALL transaction_add_cart_item("testUser", "WLIL", 10, "BK", "M", 1); 	-- arg1:username	arg2:model		arg3:size	arg4:color	arg5:gender		arg6:qty desired
 CALL transaction_checkout("testUser");														-- arg1:username
 CALL getFilteredProductList("BK", "M", -1);													-- arg1:color		arg2:gender		arg3:type_id (1=lifter,2=runner,3=trainer)	NOTE:arg1 & arg2 can = "", arg3 must be < 0 to be "blank"
 CALL getInventoryValuation(5);																-- arg1:valuationType (1=sumOfAll,2=byModel,3=byGender,4=byType,5=byColor)

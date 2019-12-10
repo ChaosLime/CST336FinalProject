@@ -7,18 +7,25 @@
               <span></span>
              </button>
          </div>
+ 
+         
+         
+
          <div class="container-fluid">
              <div id="resultsFound"></div>
-             <label>Men 
-               <input id="genderM" name="genderM" value="M" type="checkbox" checked="checked">
-               <span class="checkmark"></span>
-             </label>
-             <label>Women
-               <input id="genderW" name="genderW" value="W" type="checkbox" checked="checked">
-               <span class="checkmark"></span>
-             </label>
+            <div id="checkBoxes">
+            <div class="custom-control custom-checkbox ">
+               <input type="checkbox" class="custom-control-input" id="customCheckM" name="genderM" value="M" checked="checked">
+              <label class="custom-control-label" for="customCheckM">Men</label>
+             </div>
              
-             <select id="shoeSizes">
+             <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheckW" name="genderW" value="W" checked="checked">
+              <label class="custom-control-label" for="customCheckW" >Women</label>
+            </div>
+            </div>
+             
+             <select id="shoeSizes" class="form-control">
                 <option value="">All Sizes</option>
                 <option value="4">4 W</option> <!-- woman only -->
                 <option value="4.5">4.5 W</option> <!-- woman only -->
@@ -46,24 +53,23 @@
                 <option value="15.5">15.5 M</option> <!-- men only -->
               </select>
              
-             <select id="shoeColor">
+             <select id="shoeColor" class="form-control">
                 <option value="">All Colors</option>
                 <option value="BK">Black</option>
                 <option value="BL">Blue</option>
                 <option value="RD">Red</option>
-                <option value="GN">Green</option>
+                <option value="GR">Green</option>
                 <option value="RD">Red</option>
                 <option value="WH">White</option>
-
               </select>
               
-              <select id="shoeStyle">
+              <select id="shoeStyle" class="form-control">
                 <option value="-1">All Styles</option>
                 <option value="0">Lifters</option>
                 <option value="1">Runners</option>
                 <option value="2">Trainers</option>
               </select>
-             <button id="searchBtnMain">Search</button>
+             <button id="searchBtnMain" class="btn btn-primary">Search</button>
 
           </div>
       </nav>
