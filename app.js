@@ -44,7 +44,6 @@ app.get("/db/displayInventory", async function(req,res){
     var conn = tools.createConnection();
     var sql;
     var sqlParams;
-    
     if(req.query.action == "loadProduct"){
          sql ="CALL getFilteredProductList (?,?,?,?);";
          sqlParams = [req.query.color, req.query.gender, req.query.styles, req.query.size];
@@ -77,6 +76,38 @@ app.get("/db/displayInventory", async function(req,res){
             //sets up data to be parsed and displayed on screen
             //console.log(replacedString);
             res.send(replacedString); //This is the correct method to use to pass information back
+            conn.end();
+        });
+        console.log('Connected!');
+       
+    });
+
+});//display Inventory
+
+//gets all from inventory
+app.get("/db/insertIntoCart", async function(req,res){
+    var conn = tools.createConnection();
+    var sql;
+    var sqlParams;
+    if(req.query.action == "insert"){
+         sql ="INSERT INTO cart VALUES (?,?,?,?);";
+         sqlParams = [req.query.username, req.query.sequence, req.query.quantity_in_cart,
+         req.query.inventory_quantities_inventory_model, req.query.inventory_quantities_color_color_code,
+         req.query.inventory_quantities_size, req.query.inventory_quantities_gender];
+         console.log("Search Params:"+sqlParams);
+    }
+
+    conn.connect( function(err){
+        
+      if (err) throw err;
+      
+        conn.query(sql,sqlParams, function(err, result){
+            if (err) throw err;
+            conn.on('error', function(err) {
+                console.log(err.code); // 'ER_BAD_DB_ERROR'
+            });
+            console.log(result);
+            res.send(result);
             conn.end();
         });
         console.log('Connected!');
