@@ -281,3 +281,7 @@ Product Area classes
     font-weight: bold;
     font-style: italic;
 }
+
+#imageContainer {
+    width: 50%;
+}

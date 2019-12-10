@@ -138,7 +138,7 @@ $(document).ready(function(){
 
                     
                 //fills tag elements
-                $("#productImage"+[i]).append( "<img src='/img/inventory/" + obj[0][i].image_path +"\'>");
+                $("#productImage"+[i]).append( "<img id='imageContainer' src='/img/inventory/" + obj[0][i].image_path +"\'>");
                 $("#model"+[i]).append( "Model: "+ obj[0][i].model);
                 $("#color"+[i]).append("Color: " + obj[0][i].color_description );
                 $("#type"+[i]).append( "Type: " + obj[0][i].type_description);
