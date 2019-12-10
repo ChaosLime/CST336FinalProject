@@ -65,10 +65,15 @@ app.get("/db/displayInventory", async function(req, res) {
     var conn = tools.createConnection();
     var sql;
     var sqlParams;
+
+    if (req.query.action == "loadProduct") {
+        sql = "CALL getFilteredProductList (?,?,?,?);";
+        sqlParams = [req.query.color, req.query.gender, req.query.styles, req.query.size];
+        console.log("Search Params:" + sqlParams);
+    }
     sql = "CALL getFilteredProductList (?,?,?,?);";
     sqlParams = [req.query.color, req.query.gender, req.query.styles, req.query.size];
     //console.log("Search Params:"+sqlParams);
-
 
     conn.connect(function(err) {
 
@@ -98,7 +103,8 @@ app.get("/db/displayInventory", async function(req, res) {
             res.send(replacedString); //This is the correct method to use to pass information back
             conn.end();
         });
-        //console.log('Connected!');
+
+        console.log('Connected!');
 
     });
 
@@ -161,13 +167,26 @@ app.get("/db/displayCart", async function(req, res) {
             conn.end();
         });
         // console.log('Connected!');
-
     });
 
 }); //display Inventory
 
+//get user cart contents
+app.get("/api/getcart", function(req, res) {
 
+    var conn = tools.createConnection();
+    var sql = "SELECT * FROM cart INNER JOIN inventory ON cart.inventory_quantities_inventory_model = inventory.model INNER JOIN inventory_quantities ON cart.inventory_quantities_inventory_model = inventory_quantities.inventory_model AND cart.inventory_quantities_size = inventory_quantities.size AND cart.inventory_quantities_color_color_code = inventory_quantities.color_color_code AND cart.inventory_quantities_gender = inventory_quantities.gender WHERE cart.username = ? ORDER BY sequence";
+    //var sqlParams = req.query.username;
+    var sqlParams = "generic";
 
+    conn.connect(function(err) {
+        if (err) throw err;
+        conn.query(sql, sqlParams, function(err, result) {
+            if (err) throw err;
+            res.send(result);
+        });
+    });
+});
 
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Running Express Server...");
