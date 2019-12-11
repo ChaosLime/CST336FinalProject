@@ -4,8 +4,7 @@ $(document).ready(function() {
   var tax_rate = 0.08;
   var fadeTime = 300;
 
-  updateSumItems();
-  //getCartSum();
+  calculateCart();
 
   /* Assign actions */
   $('.quantity input').change(function() {
@@ -22,13 +21,13 @@ $(document).ready(function() {
   });
 
   /* Recalculate cart */
-  function recalculateCart(onlyTotal) {
+  function calculateCart(onlyTotal) {
     var subtotal = 0;
-
     /* Sum up row totals */
-    $('.cart-product').each(function() {
-      subtotal += parseFloat($(this).children('.subtotal').text());
+    $('.subtotal').each(function() {
+      subtotal += parseFloat($(this).text());
     });
+
 
     /* Calculate totals */
     var total = subtotal;
@@ -45,6 +44,7 @@ $(document).ready(function() {
     else {
       /* Update summary display. */
       $('.final-value').fadeOut(fadeTime, function() {
+        updateSumItems();
         $('#cart-subtotal').html(subtotal.toFixed(2));
         var tax = parseFloat((total * tax_rate));
         var totalVal = parseFloat(total);
@@ -65,26 +65,27 @@ $(document).ready(function() {
   /* Update quantity */
   function updateQuantity(quantityInput) {
     /* Update db cart */
+
     let sequenceId = $(quantityInput).parent().parent().attr('id');
-    updateCartQuantity(sequenceId, $(quantityInput).val());
+    let newQuantity = $(quantityInput).val();
+    updateCartQuantity(sequenceId, newQuantity);
+    //if( hasEnoughInventory() )
 
     /* Calculate line price */
     var productRow = $(quantityInput).parent().parent();
     var price = parseFloat(productRow.children('.price').text());
-    var quantity = $(quantityInput).val();
-    var linePrice = price * quantity;
+    var linePrice = price * newQuantity;
 
     /* Update line price display and recalc cart totals */
     productRow.children('.subtotal').each(function() {
       $(this).fadeOut(fadeTime, function() {
         $(this).text(linePrice.toFixed(2));
-        recalculateCart();
+        calculateCart();
         $(this).fadeIn(fadeTime);
       });
     });
 
     productRow.find('.item-quantity').text(quantity);
-    updateSumItems();
   }
 
   function updateSumItems() {
@@ -104,21 +105,23 @@ $(document).ready(function() {
     deleteItemFromCart(sequenceId);
     productRow.slideUp(fadeTime, function() {
       productRow.remove();
-      recalculateCart();
-      updateSumItems();
+      calculateCart();
     });
   }
 
-  function getCurrentInventory() {
+  //TODO: impliment prior to updating
+  function hasEnoughInventory(sequenceId, newQuantity) {
     $.ajax({
       method: "get",
       url: "/api/getInventoryForCartItems",
       data: {
         //"username": $("#username").val()
-        "username": "generic"
+        "username": "generic",
+        "sequence": sequenceId,
+        "newQuantity": newQuantity
       },
       success: function(result, status) {
-        checkAndUpdateQuantity(result);
+        //TODO: return true or false;
       }
     });
   }
