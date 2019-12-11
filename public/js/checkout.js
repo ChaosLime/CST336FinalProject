@@ -16,8 +16,7 @@ $(document).ready(function() {
   });
 
   $(".checkout-cta").on("click", function() {
-    // TODO: run Mitchell's SQL transaction to clear cart
-    window.open('ordered.html', '_self', false);
+    placeOrder();
   });
 
   /* Recalculate cart */
@@ -147,6 +146,17 @@ $(document).ready(function() {
         "username": "generic",
         "sequence": sequence,
         "newQuantity": newQuantity
+      }
+    });
+  }
+
+  function placeOrder() {
+    $.ajax({
+      method: "get",
+      url: "/api/createOrder",
+      data: {
+        //"username": $("#username").val()
+        "username": "generic"
       }
     });
   }

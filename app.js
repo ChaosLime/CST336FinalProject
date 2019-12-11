@@ -185,8 +185,7 @@ app.get("/api/getInventoryForCartItems", function(req, res) {
         "AND cart.inventory_quantities_color_color_code = inventory_quantities.color_color_code " +
         "AND cart.inventory_quantities_gender = inventory_quantities.gender " +
         "WHERE cart.username = ? ORDER BY sequence";
-    //var sqlParams = req.query.username;
-    var sqlParams = "generic";
+    var sqlParams = req.query.username;
 
     conn.connect(function(err) {
         if (err) throw err;
@@ -225,6 +224,21 @@ app.get("/api/deleteFromCart", function(req, res) {
         if (err) throw err;
         conn.query(sql, sqlParams, function(err, result) {
             if (err) throw err;
+        });
+    });
+});
+
+app.get("/api/createOrder", function(req, res) {
+
+    var conn = tools.createConnection();
+    var sql = 'CALL transaction_checkout(?)';
+    var sqlParams = req.query.username;
+
+    conn.connect(function(err) {
+        if (err) throw err;
+        conn.query(sql, sqlParams, function(err, result) {
+            if (err) throw err;
+            res.render("/ordered.html");
         });
     });
 });
