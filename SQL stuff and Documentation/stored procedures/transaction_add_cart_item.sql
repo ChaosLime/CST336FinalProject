@@ -26,7 +26,7 @@ SET @cartQty :=
 			inventory_quantities_color_color_code = product_color_code);
 
 -- Check to see if the desired quantity is available for cart allocation. End transation early if not
-IF desired_qty > @availableQty - @cartQty THEN
+IF desired_qty > @availableQty - @cartQty OR desired_qty <= 0 THEN
 	LEAVE transation;
 END IF;
 
