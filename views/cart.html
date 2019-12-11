@@ -38,16 +38,17 @@
         </div>
 
         <% itemsInCart.forEach(function(item) { %>
-          <div class="cart-product" id=<%=item[ 'sku' ]%>>
+          <div class="cart-product" id=<%=item[ 'sequence' ]%>>
             <div class='item'>
               <div class="product-image">
                 <img src=<%="./img/inventory/" + item[ 'image_path' ]%> alt=
                 <%=item[ 'sku' ]%> class="product-frame">
               </div>
               <div class="product-details">
-                <h5><strong><span class="item-quantity" id=<%=item[ 'sku' ]%>><%=item[ 'quantity_in_cart' ]%></span> x Shoes</strong>
+                <h5><strong><span class="item-quantity"><%=item[ 'quantity_in_cart' ]%></span> x <%= item[ 'model' ]%></strong>
                   <br>Size:
-                  <%=item['size']%>
+                  <%=(item['size']).toFixed(1)%>
+                    <%=item['gender']%>
                 </h5>
                 <p><strong>Description:</strong>
                   <%=item['model_description']%>
@@ -71,7 +72,7 @@
 
             <aside>
               <div class="summary">
-                <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
+                <div class="summary-total-items"><span id="total-items"></span> Items in your Bag</div>
                 <div class="summary-subtotal">
                   <div class="subtotal-title">Subtotal</div>
                   <div class="subtotal-value final-value" id="cart-subtotal">15.00</div>
