@@ -8,11 +8,22 @@
   Nick Saunders
  -->
 <html lang="en">
+
   <head>
     <title>Cart</title>
-  <% include partials/head.ejs %>
-  <% include partials/nav.ejs %>
-    <h2 id="noticeShip">Your order has been taken. It will ship out ASAP</h2>
-    <p>(display invoice?)</p>
+    <script type="text/Javascript" src="./js/ordered.js"></script>
+    <% include partials/head.ejs %>
+      <% include partials/nav.ejs %>
+  </head>
+  <h2 id="noticeShip">Order Placed</h2>
+  <div id="personalThankYou">
+    <h3>Thank you for your order
+      <%=name %>!!!
+    </h3>
+    <p class=deliveryDescription>We will be shipping your parts to
+      <%= address %>
+    </p>
 
-<% include partials/footer.ejs %>
+  </div>
+
+  <% include partials/footer.ejs %>

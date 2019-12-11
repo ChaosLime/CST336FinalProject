@@ -157,9 +157,6 @@ $(document).ready(function() {
       data: {
         //"username": $("#username").val()
         "username": "generic"
-      },
-      success: function(result){
-        //console.log(result);
       }
     });
   }

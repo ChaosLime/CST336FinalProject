@@ -1,3 +1,4 @@
+const faker = require("faker");
 const express = require("express");
 const app = express();
 app.set('view engine', 'ejs');
@@ -59,8 +60,9 @@ app.get("/signedUp.html", function(req, res) {
     res.render("signedUp.html");
 });
 
+//getting fake name and zip code data from faker API
 app.get("/ordered", function(req, res) {
-    res.render("ordered.html");
+    res.render("ordered.html", { "name": faker.name.findName(), "address": faker.address.zipCode() });
 });
 
 //queries to DB
