@@ -37,7 +37,6 @@ app.get("/cart.html", function(req, res) {
         "AND cart.inventory_quantities_color_color_code = inventory_quantities.color_color_code " +
         "AND cart.inventory_quantities_gender = inventory_quantities.gender " +
         "WHERE cart.username = 'generic' ORDER BY sequence";
-    //var sqlParams = req.query.username;
     var sqlParams = "generic";
 
     conn.connect(function(err) {
@@ -73,7 +72,6 @@ app.get("/db/displayInventory", async function(req, res) {
     }
     sql = "CALL getFilteredProductList (?,?,?,?);";
     sqlParams = [req.query.color, req.query.gender, req.query.styles, req.query.size];
-    //console.log("Search Params:"+sqlParams);
 
     conn.connect(function(err) {
 
@@ -104,8 +102,6 @@ app.get("/db/displayInventory", async function(req, res) {
             conn.end();
         });
 
-       // console.log('Connected!');
-
     });
 
 }); //display Inventory
@@ -120,7 +116,6 @@ app.get("/db/insertIntoCart", async function(req, res) {
         req.query.inventory_quantities_size, req.query.inventory_quantities_color_color_code,
         req.query.inventory_quantities_gender, req.query.quantity_in_cart
     ];
-    //console.log("Search Params:"+sqlParams);
 
     conn.connect(function(err) {
 
@@ -131,11 +126,9 @@ app.get("/db/insertIntoCart", async function(req, res) {
             conn.on('error', function(err) {
                 console.log(err.code); // 'ER_BAD_DB_ERROR'
             });
-            //console.log(result);
             res.send(result);
             conn.end();
         });
-        // console.log('Connected!');
 
     });
 
@@ -147,7 +140,6 @@ app.get("/db/displayCart", async function(req, res) {
     var sqlParams;
     sql = "CALL getCartItems(?);";
     sqlParams = [req.query.username];
-    //console.log("Search Params:"+sqlParams);
 
     conn.connect(function(err) {
 
@@ -162,11 +154,9 @@ app.get("/db/displayCart", async function(req, res) {
             var splitResult = stringifiedResult.split(",RowDataPacket ");
             var replacedString = splitResult.toString().replace(/[^a-zA-Z0-9[]_:.{},\/"]/g, ' ').replace(/  +/g, ' ');
             //sets up data to be parsed and displayed on screen
-            //console.log(replacedString);
             res.send(replacedString); //This is the correct method to use to pass information back
             conn.end();
         });
-        // console.log('Connected!');
     });
 
 }); //display Inventory
@@ -176,7 +166,7 @@ app.get("/api/getcart", function(req, res) {
 
     var conn = tools.createConnection();
     var sql = "SELECT * FROM cart INNER JOIN inventory ON cart.inventory_quantities_inventory_model = inventory.model INNER JOIN inventory_quantities ON cart.inventory_quantities_inventory_model = inventory_quantities.inventory_model AND cart.inventory_quantities_size = inventory_quantities.size AND cart.inventory_quantities_color_color_code = inventory_quantities.color_color_code AND cart.inventory_quantities_gender = inventory_quantities.gender WHERE cart.username = ? ORDER BY sequence";
-    //var sqlParams = req.query.username;
+    //var sqlParams = req.query.username; // ideal if used for multiple users, hardcoded for the product,
     var sqlParams = "generic";
 
     conn.connect(function(err) {
