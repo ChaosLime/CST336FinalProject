@@ -36,7 +36,7 @@ app.get("/cart.html", function(req, res) {
         "AND cart.inventory_quantities_size = inventory_quantities.size " +
         "AND cart.inventory_quantities_color_color_code = inventory_quantities.color_color_code " +
         "AND cart.inventory_quantities_gender = inventory_quantities.gender " +
-        "WHERE cart.username = 'generic' ORDER BY sequence";
+        "WHERE cart.username = ? ORDER BY sequence";
     //var sqlParams = req.query.username;
     var sqlParams = "generic";
 
@@ -172,10 +172,19 @@ app.get("/db/displayCart", async function(req, res) {
 }); //display Inventory
 
 //get user cart contents
-app.get("/api/getcart", function(req, res) {
+app.get("/api/getInventoryForCartItems", function(req, res) {
 
     var conn = tools.createConnection();
-    var sql = "SELECT * FROM cart INNER JOIN inventory ON cart.inventory_quantities_inventory_model = inventory.model INNER JOIN inventory_quantities ON cart.inventory_quantities_inventory_model = inventory_quantities.inventory_model AND cart.inventory_quantities_size = inventory_quantities.size AND cart.inventory_quantities_color_color_code = inventory_quantities.color_color_code AND cart.inventory_quantities_gender = inventory_quantities.gender WHERE cart.username = ? ORDER BY sequence";
+    var sql = "SELECT cart.username, cart.sequence, cart.quantity_in_cart, " +
+        "inventory_quantities.quantity_on_hand FROM cart " +
+        "INNER JOIN inventory " +
+        "ON cart.inventory_quantities_inventory_model = inventory.model " +
+        "INNER JOIN inventory_quantities " +
+        "ON cart.inventory_quantities_inventory_model = inventory_quantities.inventory_model " +
+        "AND cart.inventory_quantities_size = inventory_quantities.size " +
+        "AND cart.inventory_quantities_color_color_code = inventory_quantities.color_color_code " +
+        "AND cart.inventory_quantities_gender = inventory_quantities.gender " +
+        "WHERE cart.username = ? ORDER BY sequence";
     //var sqlParams = req.query.username;
     var sqlParams = "generic";
 
@@ -184,6 +193,38 @@ app.get("/api/getcart", function(req, res) {
         conn.query(sql, sqlParams, function(err, result) {
             if (err) throw err;
             res.send(result);
+        });
+    });
+});
+
+app.get("/api/updateCartQuantity", function(req, res) {
+    var conn = tools.createConnection();
+    var sql = "UPDATE cart " +
+        "SET quantity_in_cart = ? " +
+        "WHERE username = ? AND sequence = ?";
+    //var sqlParams = req.query.username;
+    var sqlParams = [req.query.newQuantity, req.query.username, req.query.sequence];
+
+    conn.connect(function(err) {
+        if (err) throw err;
+        conn.query(sql, sqlParams, function(err, result) {
+            if (err) throw err;
+        });
+    });
+});
+
+app.get("/api/deleteFromCart", function(req, res) {
+
+    var conn = tools.createConnection();
+    var sql = "DELETE FROM cart " +
+        "WHERE username = ? AND sequence = ?";
+    //var sqlParams = req.query.username;
+    var sqlParams = [req.query.username, req.query.sequence];
+
+    conn.connect(function(err) {
+        if (err) throw err;
+        conn.query(sql, sqlParams, function(err, result) {
+            if (err) throw err;
         });
     });
 });

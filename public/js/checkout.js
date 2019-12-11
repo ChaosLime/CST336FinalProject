@@ -4,7 +4,8 @@ $(document).ready(function() {
   var tax_rate = 0.08;
   var fadeTime = 300;
 
-  getUserCartContents();
+  updateSumItems();
+  //getCartSum();
 
   /* Assign actions */
   $('.quantity input').change(function() {
@@ -15,11 +16,8 @@ $(document).ready(function() {
     removeItem(this);
   });
 
-  $(document).ready(function() {
-    updateSumItems();
-  });
-
   $(".checkout-cta").on("click", function() {
+    // TODO: run Mitchell's SQL transaction to clear cart
     window.open('ordered.html', '_self', false);
   });
 
@@ -34,18 +32,6 @@ $(document).ready(function() {
 
     /* Calculate totals */
     var total = subtotal;
-
-    //If there is a valid promoCode, and subtotal < 10 subtract from total
-    var promoPrice = parseFloat($('.promo-value').text());
-    if (promoPrice) {
-      if (subtotal >= 10) {
-        total -= promoPrice;
-      }
-      else {
-        alert('Order must be more than $10 for Promo code to apply.');
-        $('.summary-promo').addClass('hide');
-      }
-    }
 
     /*If switch for update only total, update only total display*/
     if (onlyTotal) {
@@ -78,6 +64,10 @@ $(document).ready(function() {
 
   /* Update quantity */
   function updateQuantity(quantityInput) {
+    /* Update db cart */
+    let sequenceId = $(quantityInput).parent().parent().attr('id');
+    updateCartQuantity(sequenceId, $(quantityInput).val());
+
     /* Calculate line price */
     var productRow = $(quantityInput).parent().parent();
     var price = parseFloat(productRow.children('.price').text());
@@ -99,16 +89,19 @@ $(document).ready(function() {
 
   function updateSumItems() {
     var sumItems = 0;
-    $('.quantity input').each(function() {
+    $('.quantity-field').each(function() {
       sumItems += parseInt($(this).val());
     });
-    $('.total-items').text(sumItems);
+
+    $('#total-items').text(sumItems);
   }
 
   /* Remove item from cart */
   function removeItem(removeButton) {
     /* Remove row from DOM and recalc cart total */
     var productRow = $(removeButton).parent().parent();
+    let sequenceId = productRow.attr('id');
+    deleteItemFromCart(sequenceId);
     productRow.slideUp(fadeTime, function() {
       productRow.remove();
       recalculateCart();
@@ -116,27 +109,43 @@ $(document).ready(function() {
     });
   }
 
-  function getUserCartContents() {
+  function getCurrentInventory() {
     $.ajax({
       method: "get",
-      url: "/api/getCart",
+      url: "/api/getInventoryForCartItems",
       data: {
         //"username": $("#username").val()
         "username": "generic"
       },
       success: function(result, status) {
-        updateCartContents(result);
+        checkAndUpdateQuantity(result);
       }
     });
   }
 
-  function updateCartContents(itemsInCart) {
-    $("#cart-product").html("");
-    let i = 0;
-    itemsInCart.forEach(function(item) {
+  function deleteItemFromCart(sequence) {
+    $.ajax({
+      method: "get",
+      url: "/api/deleteFromCart",
+      data: {
+        //"username": $("#username").val()
+        "username": "generic",
+        "sequence": sequence
+      }
+    });
+  }
 
-      i++;
-    })
+  function updateCartQuantity(sequence, newQuantity) {
+    $.ajax({
+      method: "get",
+      url: "/api/updateCartQuantity",
+      data: {
+        //"username": $("#username").val()
+        "username": "generic",
+        "sequence": sequence,
+        "newQuantity": newQuantity
+      }
+    });
   }
 
 });
