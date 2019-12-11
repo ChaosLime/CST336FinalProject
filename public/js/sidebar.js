@@ -35,13 +35,13 @@ $(document).ready(function () {
     
     //used to dynamically allocate button presses to user
     $('body').on('click','.cartBtn', function () {
-        if(sideInactive){
+        if(!sideInactive){
                 sideInactive = false;
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
         }
         addToCart($(this).val())
-         });
+    });
 
 
 
