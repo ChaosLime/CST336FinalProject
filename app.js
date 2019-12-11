@@ -55,7 +55,7 @@ app.get("/signedUp.html", function(req, res) {
     res.render("signedUp.html");
 });
 
-app.get("/ordered.html", function(req, res) {
+app.get("/ordered", function(req, res) {
     res.render("ordered.html");
 });
 
@@ -230,7 +230,6 @@ app.get("/api/createOrder", function(req, res) {
         if (err) throw err;
         conn.query(sql, sqlParams, function(err, result) {
             if (err) throw err;
-            res.render("/ordered.html");
         });
     });
 });
