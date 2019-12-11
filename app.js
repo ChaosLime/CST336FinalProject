@@ -104,7 +104,7 @@ app.get("/db/displayInventory", async function(req, res) {
             conn.end();
         });
 
-        console.log('Connected!');
+       // console.log('Connected!');
 
     });
 
