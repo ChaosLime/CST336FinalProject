@@ -58,7 +58,7 @@ app.get("/logout", function(req, res) {
 function checkPassword(password, hashedValue) {
     return new Promise( function(resolve, reject) {
         bcrypt.compare(password, hashedValue, function(err, result) {
-            console.log("Result: " + result);
+            //console.log("Result: " + result);
             resolve(result);
         });
     });
@@ -78,7 +78,7 @@ function checkUsername(username) {
             if (err) throw err;
             conn.query(sql, [username], function(err, rows, fields) {   // executes the SQL statement, replacing the placeholder with the “username” passed to the function
                 if (err) throw err;
-                console.log("Rows found: " + rows.length);
+                //console.log("Rows found: " + rows.length);
                 resolve(rows);  // returns the result of the SQL statement, whether it is null (no records found) or the actual record
             });  // query
         });  // connect
@@ -116,7 +116,7 @@ app.post("/login", async function(req, res) {
     }
     
     let passwordMatch = await checkPassword(password, hashedPswd);
-    console.log("passwordMatch: " + passwordMatch);
+    //console.log("passwordMatch: " + passwordMatch);
     
     //if (username == 'admin' && password == 'secret') { // non-hashing password
     if (passwordMatch) {
@@ -179,7 +179,7 @@ app.get("/db/displayInventory", async function(req, res) {
     if (req.query.action == "loadProduct") {
         sql = "CALL getFilteredProductList (?,?,?,?);";
         sqlParams = [req.query.color, req.query.gender, req.query.styles, req.query.size];
-        console.log("Search Params:" + sqlParams);
+        //console.log("Search Params:" + sqlParams);
     }
     sql = "CALL getFilteredProductList (?,?,?,?);";
     sqlParams = [req.query.color, req.query.gender, req.query.styles, req.query.size];

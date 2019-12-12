@@ -174,7 +174,7 @@ app.get('/edit/(:id)', function(req, res, next){
 				res.redirect('/users')
 			}
 			else { // if user found
-				console.log('Item found with model id = ' + req.params.id);
+				//console.log('Item found with model id = ' + req.params.id);
 				// render to views/user/edit.ejs template file
 				res.render('user/edit', {
 					title: 'Edit Item', 
