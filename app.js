@@ -5,20 +5,14 @@ app.set('view engine', 'ejs');
 app.set("views", "./views/");
 app.use(express.static("public"));
 
-
 app.engine('html', require('ejs').renderFile);
 
 const tools = require("./tools.js");
-
-
-
 
 //root route
 app.get("/", async function(req, res) {
     res.render("index.html");
 }); // root route
-
-
 
 // other routes
 app.get("/login", function(req, res) {
@@ -43,7 +37,6 @@ app.get("/cart.html", function(req, res) {
         "AND cart.inventory_quantities_gender = inventory_quantities.gender " +
         "WHERE cart.username = ? ORDER BY sequence";
     //var sqlParams = req.query.username;
-
     var sqlParams = "generic";
 
     conn.connect(function(err) {
@@ -62,7 +55,7 @@ app.get("/signedUp.html", function(req, res) {
 
 //getting fake name and zip code data from faker API
 app.get("/ordered", function(req, res) {
-    res.render("ordered.html", { "name": faker.name.findName(), "address": faker.address.zipCode() });
+    res.render("ordered.html", { "name": faker.name.findName(), "zipCode": faker.address.zipCode() });
 });
 
 //queries to DB

@@ -1,29 +1,75 @@
 $(document).ready(function() {
 
-   //updateDeliveryDescription();
+   updateDeliveryDescription();
 
    function updateDeliveryDescription() {
 
       $("#deliveryDescription").html("");
 
+      let zipCode = $("#zipToShip").text().substring(0, 5);
+
       //getting city and state from zip code using API
-      //alert($("#zip").val());
-      $("#city").html("Zip Code Not Found");
-      $("#latitude").html("");
-      $("#longitude").html("");
       $.ajax({
          method: "GET",
-         url: "https://cst336.herokuapp.com/projects/api/cityInfoAPI.php",
+         url: "https://itcdland.csumb.edu/~milara/ajax/cityInfoByZip.php",
          dataType: "json",
-         data: { "zip": $("#zip").val() },
+         data: { "zip": zipCode },
          success: function(result, status) {
-            //alert(result.city);
-            $("#city").html(result.city);
-            $("#city").css("color", "black");
-            $("#latitude").html(result.latitude);
-            $("#longitude").html(result.longitude);
+            if (result) {
+               $("#zipToShip").text(result.city + ", " + result.state);
+               getInTransitTime(zipCode);
+            }
          }
       }); //ajax
-   }); //zip
-}
+
+   }
+
+   function getInTransitTime(zipCode) {
+      let today = new Date();
+
+      $.ajax({
+         method: "POST",
+         url: "https://onlinetools.ups.com/rest/TimeInTransit",
+         dataType: "json",
+         data: {
+            "Security": {
+               "UsernameToken": {
+                  "Username": "mikiereed",
+                  "Password": "CST336Password"
+               },
+               "UPSServiceAccessToken": {
+                  "AccessLicenseNumber": "9D7286BC379499F2"
+               }
+            },
+            "TimeInTransitRequest": {
+               "Request": {
+                  "RequestOption": "TNT",
+                  "TransactionReference": {
+                     "CustomerContext": "",
+                     "TransactionIdentifier": ""
+                  }
+               },
+               "ShipFrom": {
+                  "Address": {
+                     "StateProvinceCode": "CA",
+                     "CountryCode": "1",
+                     "PostalCode": "91010"
+                  }
+               },
+               "ShipTo": {
+                  "Address": {
+                     "CountryCode": "1",
+                     "PostalCode": zipCode
+                  }
+               },
+               "Pickup": {
+                  "Date": today
+               },
+            }
+         },
+         success: function(result, status) {
+            alert(result);
+         }
+      });
+   }
 });

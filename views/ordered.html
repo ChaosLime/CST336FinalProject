@@ -11,19 +11,26 @@
 
   <head>
     <title>Cart</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/Javascript" src="./js/ordered.js"></script>
     <% include partials/head.ejs %>
       <% include partials/nav.ejs %>
+        <link href="./css/ordered.css" rel="stylesheet" type="text/css" />
   </head>
-  <h2 id="noticeShip">Order Placed</h2>
-  <div id="personalThankYou">
-    <h3>Thank you for your order
-      <%=name %>!!!
-    </h3>
-    <p class=deliveryDescription>We will be shipping your parts to
-      <%= address %>
-    </p>
 
-  </div>
+  <body>
+    <main>
+      <h2 id="noticeShip">Order Placed</h2>
+      <div id="personalThankYou">
+        <h3>Thank you for your order
+          <%=name %>!!!
+        </h3>
+        <p class=deliveryDescription>We will be shipping your parts to
+          <span id='zipToShip'><%= zipCode %></span>
+        </p>
+        <p id=shippingTime>
+        </p>
 
-  <% include partials/footer.ejs %>
+      </div>
+    </main>
+    <% include partials/footer.ejs %>
