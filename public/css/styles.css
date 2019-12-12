@@ -330,3 +330,9 @@ Product Area classes
 ul {
     list-style: none;
 }
+
+.adminNavBtn {
+    padding: 10px;
+    size: 25rem;
+    color: #259acc;
+}
