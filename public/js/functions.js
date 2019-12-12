@@ -2,16 +2,18 @@ $(document).ready(function(){
     var turnCounter = 0;
     //intended to load the page with all content at the beginning, if removed will start blank.
     updateSearch("","",-1,"","loadProduct");
-    
+
     $("#searchBtnMain").on("click", function(){
         var color = $("#shoeColor").val();
         var gender = genderCheck();
         var styles = $("#shoeStyle").val();
         var size = $("#shoeSizes").val();
         var action = "loadProduct";
+
         
         updateSearch(color, gender, styles, size, action);
 
+    
     });
     
     $("#amountInCart").html("Empty");
@@ -21,7 +23,6 @@ $(document).ready(function(){
         //checks if both checkboxes are on
        if($("input[name='genderW']:checked").val() == 'W' &&
         $("input[name='genderM']:checked").val() == 'M'){
-            //alert("Both M and W");
             return "";
         }
         else if( $("input[name='genderM']:checked").val() == 'M' && 
@@ -121,7 +122,11 @@ $(document).ready(function(){
                 $("#descriptionShort"+[i]).append(obj[0][i].model_description );
                 $("#descriptionLong"+[i]).append(obj[0][i].model_detailed_description);
                 $("#price"+[i]).append(obj[0][i].price);
-                $("#quantityOnHand"+[i]).append(obj[0][i].quantity_on_hand);
+                    if(obj[0][i].quantity_on_hand < 0){
+                        var qty = 0;
+                    }else{
+                        qty = obj[0][i].quantity_on_hand;}
+                $("#quantityOnHand"+[i]).append(qty);
                 $("#addToCartBtn"+[i]).append( "<button id='add-btn"+[i]+"' class='btn btn-primary cartBtn' type='button' value='"+[i]+"'>Add to Cart</button>");    
             }
         }// end of renderProduct

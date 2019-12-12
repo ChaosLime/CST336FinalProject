@@ -48,6 +48,10 @@ button,
   float: left;
 }
 
+.subtotal-heading {
+  float: right;
+}
+
 .price:before,
 .subtotal:before,
 .subtotal-value:before,
@@ -163,11 +167,12 @@ li.subtotal:before {
 }
 
 .item-heading {
-  padding-left: 4.375rem;
+  padding-left: 1rem;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 
 .cart-product {
   border-bottom: 1px solid #ccc;

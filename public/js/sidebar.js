@@ -1,40 +1,51 @@
 $(document).ready(function () {
-    var sideActive = false;
+   var sideInactive = false;
+
+    var fillCart = (function() {
+        var executed = false;
+        return function() {
+            if (!executed) {
+                executed = true;
+                displayCart('generic');
+            }
+        };
+    })();
+    //auto fills cart on start, will only run once.
+    fillCart();
+
 
     $('#sidebarCollapse').on('click', function () {
-        
-            if(!sideActive){
-            sideActive = true;
-            $('#sidebar').toggleClass('active');
-            $(this).toggleClass('active');
-            }
-            else if(sideActive){
-                sideActive = false;
+
+            if(!sideInactive){
+                sideInactive = true;
+                sessionStorage.setItem("sideInactive", true);
+    
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
             }
-        
+            else if(sideInactive){
+                sideInactive = false;
+                sessionStorage.setItem("sideInactive", false);
+
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            }
 
     });
     
     //used to dynamically allocate button presses to user
-    let alreadyAdded = false;
     $('body').on('click','.cartBtn', function () {
-        //returns unique value from button.
-
-        if(!sideActive){
-            if(!alreadyAdded){
-               sideActive = true;
-            $('#sidebar').toggleClass('active');
-            $(this).toggleClass('active');
-            alreadyAdded = true;
-            }
+        if(!sideInactive){
+                sideInactive = false;
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
         }
-       addToCart($(this).val())
-     });
+        addToCart($(this).val())
+    });
+
+
 
     function addToCart(elementValue){
-        //alert(elementValue);
         var username = 'generic';
         var model = $("#model"+elementValue).text();
         var size = $("#size"+elementValue).text();
@@ -42,7 +53,6 @@ $(document).ready(function () {
         var gender =$("#gender"+elementValue).text();
         var qty = $("#productQuantity"+elementValue).val();
 
-        //alert(username + " " + model + " " + size + " " + color + " " + gender + " " + qty);
         insertIntoCart(username, model, size, color, gender, qty);
 
     }
@@ -60,7 +70,6 @@ $(document).ready(function () {
 
                      },
                     success: function(data){
-                        //alert("product inserted to cart");
                         displayCart('generic');
                     },
                     error: function(errorThrown){
@@ -104,22 +113,22 @@ $(document).ready(function () {
                 $("#productInCart").append("<div id='cart"+[i]+"'class='container'></div>");
               
                 //sets product id with tag elements
-                $("#cart" +[i]).html("<div class='image' id='productImage"+[i]+"'></div>");
-                $("#cart" +[i]).append("<div>Model: <span id='model"+[i]+"'></span></div>");
-                $("#cart" +[i]).append("<div>Color Code: <span id='color"+[i]+"'></span></div>");
-                $("#cart" +[i]).append("<div>Size: <span id='size"+[i]+"'></span>" +
-                            "<span id='gender"+[i]+"'></span></div>");
-                $("#cart" +[i]).append("<div>Qty: <span id='qty"+[i]+"'></span></div>");
+                $("#cart" +[i]).html("<div id='productImageCart"+[i]+"'></div>");
+                $("#cart" +[i]).append("<div>Model: <span id='modelCart"+[i]+"'></span></div>");
+                $("#cart" +[i]).append("<div>Color Code: <span id='colorCart"+[i]+"'></span></div>");
+                $("#cart" +[i]).append("<div>Size: <span id='sizeCart"+[i]+"'></span>" +
+                            "<span id='genderCart"+[i]+"'></span></div>");
+                $("#cart" +[i]).append("<div>Qty: <span id='qtyCart"+[i]+"'></span></div>");
 
 
 
                 //fills tag elements
-                $("#productImage"+[i]).append("<img id='imageContainerSmall' src='/img/inventory/" + obj[0][i].image_path +"\'>");
-                $("#model"+[i]).append(obj[0][i].inventory_quantities_inventory_model);
-                $("#color"+[i]).append(obj[0][i].inventory_quantities_color_color_code);
-                $("#size"+[i]).append(obj[0][i].inventory_quantities_size);
-                $("#gender"+[i]).append(obj[0][i].inventory_quantities_gender);
-                $("#qty"+[i]).append(obj[0][i].quantity_in_cart);
+                $("#productImageCart"+[i]).append("<img id='imageContainerSmall' src='/img/inventory/" + obj[0][i].image_path +"\'>");
+                $("#modelCart"+[i]).append(obj[0][i].inventory_quantities_inventory_model);
+                $("#colorCart"+[i]).append(obj[0][i].inventory_quantities_color_color_code);
+                $("#sizeCart"+[i]).append(obj[0][i].inventory_quantities_size);
+                $("#genderCart"+[i]).append(obj[0][i].inventory_quantities_gender);
+                $("#qtyCart"+[i]).append(obj[0][i].quantity_in_cart);
 
                 
             }
