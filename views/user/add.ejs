@@ -1,0 +1,42 @@
+<!--
+including header content which is common for all pages
+-->
+<% include ../partials/header_admin.ejs %>
+
+<% if (messages.error) { %>
+	<p style="color:red"><%- messages.error %></p>
+<% } %>
+
+<% if (messages.success) { %>
+	<p style="color:green"><%- messages.success %></p>
+<% } %>
+
+<form action="/users/add" method="post" name="form1">
+	<table width="25%" border="0">
+		<tr> 
+			<td>Model</td>
+			<td><input type="text" name="model" id="name" value="<%= model %>" /></td>
+		</tr>
+		<tr> 
+			<td>Model Summary</td>
+			<td><input type="text" name="model_description" value="<%= model_description %>" /></td>
+		</tr>
+		<tr> 
+			<td>Detailed Description</td>
+			<td><input type="text" name="model_detailed_description" value="<%= model_detailed_description %>" /></td>
+		</tr>
+		<tr> 
+			<td>Price</td>
+			<td><input type="text" name="price" value="<%= price %>" /></td>
+		</tr>
+		<tr> 
+			<td></td>
+			<td><input type="submit" name="Submit" value="Add" /></td>
+		</tr>
+	</table>
+</form>
+
+<!--
+including footer content which is common for all pages
+-->
+<% include ../partials/footer_admin.ejs %>
