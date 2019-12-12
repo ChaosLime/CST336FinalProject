@@ -151,9 +151,15 @@ app.get("/cart.html", function(req, res) {
 
     conn.connect(function(err) {
         if (err) throw err;
+        conn.on('error', function(err) {
+                console.log(err.code); // 'ER_BAD_DB_ERROR'
+                conn.end();
+            });
         conn.query(sql, sqlParams, function(err, result) {
             if (err) throw err;
             res.render("cart.html", { "itemsInCart": result });
+            conn.end();
+            
         });
     });
 });
@@ -340,6 +346,8 @@ app.get("/api/getInventoryForCartItems", function(req, res) {
         conn.query(sql, sqlParams, function(err, result) {
             if (err) throw err;
             res.send(result);
+            conn.end();
+
         });
     });
 });
@@ -356,6 +364,8 @@ app.get("/api/updateCartQuantity", function(req, res) {
         if (err) throw err;
         conn.query(sql, sqlParams, function(err, result) {
             if (err) throw err;
+            conn.end();
+
         });
     });
 });
@@ -372,6 +382,7 @@ app.get("/api/deleteFromCart", function(req, res) {
         if (err) throw err;
         conn.query(sql, sqlParams, function(err, result) {
             if (err) throw err;
+            conn.end();
         });
     });
 });
@@ -462,9 +473,9 @@ app.use(methodOverride(function (req, res) {
  * So, we also have to install and use 
  * cookie-parser & session modules
  */ 
-var flash = require('express-flash')
-var cookieParser = require('cookie-parser');
-var admin_session = require('express-session');
+const flash = require('express-flash')
+const cookieParser = require('cookie-parser');
+const admin_session = require('express-session');
 
 app.use(cookieParser('keyboard cat'))
 app.use(admin_session({ 
@@ -494,6 +505,7 @@ app.get('/reports', function (req, res) {
         if (err) throw err;
         conn.query(sql, sqlParams, function(err, result) {
             if (err) throw err;
+            conn.end();
         });
     });
 });
