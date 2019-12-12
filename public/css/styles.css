@@ -316,3 +316,17 @@ Product Area classes
 #noticeShip {
     text-align: center;
 }
+
+#signInForm {
+    text-align: center;
+}
+
+#adminNav,
+#background,
+#adminContent{
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+}
