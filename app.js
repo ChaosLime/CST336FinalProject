@@ -6,7 +6,7 @@ app.set("views", "./views/");
 app.use(express.static("public"));
 
 const session = require("express-session");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 app.engine('html', require('ejs').renderFile);
 
