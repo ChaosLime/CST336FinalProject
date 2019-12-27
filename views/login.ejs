@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login Screen</title>
+        <% include partials/head.ejs %>
+        <% include partials/nav.ejs %>
+        
+        <div id="signInForm" class="col-md-6 container">
+            <form method="POST">
+                <label class="control-label">Username</label><br>
+                <input type="text" size="15" placeholder="admin" name="username" class="form-control"/>
+                <br/>
+    		 	<label class="control-label">Password</label><br> 
+                <input type="password" placeholder="default admin password" name="password" class="form-control"/>
+                <br/>                       
+                <button class="btn btn-block btn-success">Log in</button>
+                <br>
+            </form>
+            <% if (typeof loginError != "undefined" && loginError) { %>
+            <h3 class="error" style="color:#b62327">*** Incorrect Credentials ***</h3>
+            <% } %>
+        </div>
+ 
+       
+   <% include partials/footer.ejs %>

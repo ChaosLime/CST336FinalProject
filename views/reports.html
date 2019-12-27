@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+  Final Project for CST 336 Internet Programming
+  Team:
+  Austin Ah Loo
+  Mikie Reed
+  Mitchell Saunders
+  Nick Saunders
+ -->
+<html lang="en">
+  <head>
+    <title>Valulations</title>
+    
+  <% include partials/header_admin.ejs %>
+  <div>
+  	<h3>Instructions</h3>
+  	<ul>
+  		<li>1: All Inventory Value</li>
+  		<li>2: Value by Model</li>
+	 	  <li>3: Value by Gender</li>
+  		<li>4: Value by Type</li>
+   		<li>5: Value by Color</li>
+  		<li>6: Average Price</li>
+  		<li>7: Quantity on Hand by Model</li>
+  		<li>8: Model, Size, Color code, Gender, Quantity Available</li>
+  		<li>9: Quantity Available by Model</li>
+  		<li>10: Quantity Available by Size</li>
+  		<li>11: Quantity Available by Color code</li>
+  		<li>12: Quantity Available by Gender</li>
+  	</ul>
+		<input type="number" id="UserInput">
+		<input type='button' id="ValButton" value="Get Valuation" >
+	</div>
+		
+	<div id="valContainer"></div>
+
+<% include partials/footer.ejs %>
