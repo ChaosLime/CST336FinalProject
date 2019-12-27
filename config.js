@@ -1,9 +1,9 @@
 var config = {
 	database: {
-		host: 'cst336db.space',
-        user: 'cst336_dbUser030',
-    password: 'qq0mon',
-    db: 'cst336_db030'
+        host: 'us-cdbr-iron-east-05.cleardb.net',
+        user: 'bc0ca7ea703d0d',
+    password: 'c8af3bcc',
+    db: 'heroku_35b42c01aef0b09'
 	},
 	
 };
